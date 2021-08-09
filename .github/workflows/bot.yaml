@@ -43,6 +43,8 @@ jobs:
           RTWEET_APP: ${{ secrets.RTWEET_APP }}
           RTWEET_CONSUMER_KEY: ${{ secrets.RTWEET_CONSUMER_KEY }}
           RTWEET_CONSUMER_SECRET: ${{ secrets.RTWEET_CONSUMER_SECRET }}
+          RTWEET_ACCESS_TOKEN: ${{ secrets.RTWEET_ACCESS_TOKEN }}
+          RTWEET_ACCESS_SECRET: ${{ secrets.RTWEET_ACCESS_SECRET }}
         run: |
 
           library("dplyr")
@@ -62,7 +64,9 @@ jobs:
           create_token(
             app = Sys.getenv("RTWEET_APP"),
             consumer_key = Sys.getenv("RTWEET_CONSUMER_KEY"),
-            consumer_secret = Sys.getenv("RTWEET_CONSUMER_SECRET")
+            consumer_secret = Sys.getenv("RTWEET_CONSUMER_SECRET"),
+            access_token = Sys.getenv("RTWEET_ACCESS_TOKEN"),
+            access_secret = Sys.getenv("RTWEET_ACCESS_SECRET")
           )
           post_tweet(sampled_420$msg)
         shell: Rscript {0}
