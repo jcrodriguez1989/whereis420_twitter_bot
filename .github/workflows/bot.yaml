@@ -39,6 +39,10 @@ jobs:
           remotes::install_local(force = TRUE)
         shell: Rscript {0}
       - name: Run bot scripts
+        env:
+          RTWEET_APP: ${{ secrets.RTWEET_APP }}
+          RTWEET_CONSUMER_KEY: ${{ secrets.RTWEET_CONSUMER_KEY }}
+          RTWEET_CONSUMER_SECRET: ${{ secrets.RTWEET_CONSUMER_SECRET }}
         run: |
 
           library("dplyr")
