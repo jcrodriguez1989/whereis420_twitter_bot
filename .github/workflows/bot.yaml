@@ -41,9 +41,23 @@ jobs:
         run: |
           
           library("dplyr")
+          library("emoji")
+          library("glue")
+          library("rtweet")
           library("whereis420")
           
-          get_420_places() %>% 
-            select(time, location) %>% 
-            print(n = Inf)
+          spark_emoji <- emoji_name[["sparkles"]]
+          places_420 <- get_420_places() %>% select(time, location)
+          sampled_420 <- slice_sample(places_420, n = 1) %>%
+            mutate(msg = glue(
+              "{spark_emoji}It's 4:20 in {location}{spark_emoji} ",
+              "https://www.google.com/maps/place/{gsub(' ', '+', location)}/"
+            ))
+          
+          create_token(
+            app = Sys.getenv("RTWEET_APP"),
+            consumer_key = Sys.getenv("RTWEET_CONSUMER_KEY"),
+            consumer_secret = Sys.getenv("RTWEET_CONSUMER_SECRET")
+          )
+          post_tweet(sampled_420$msg)
         shell: Rscript {0}
