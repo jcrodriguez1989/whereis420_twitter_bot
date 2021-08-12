@@ -57,7 +57,8 @@ jobs:
           sampled_420 <- slice_sample(places_420, n = 1) %>%
             mutate(msg = glue(
               "{spark_emoji}It's 4:20 in {location}{spark_emoji} ",
-              "https://www.google.com/maps/place/{gsub(' ', '+', location)}/"
+              "https://www.google.com/maps/place/{gsub(' ', '+', location)}/ ",
+              "#Its420Somewhere"
             ))
 
           create_token(
